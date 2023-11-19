@@ -2,4 +2,4 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 Link on website https://palomaresbooks.ru (not complete)
 
 
-/*All files that are the intellectual property of the author have been deleted.*/
+***All files that are the intellectual property of the author have been deleted.***
