@@ -29,13 +29,15 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          margin: "8px",
+          margin: "20px",
           fontSize: "22px",
           borderColor: "#2E2F2F",
-          background: "#F0EDEE",
+          boxShadow: "0px 0px 6px 6px rgba(46, 54, 60, 0.2)",
           "&:hover": {
+            color: "#2E2F2F",
             background: "#F0EDEE",
             fontWeight: "700",
+            boxShadow: "0px 0px 6px 6px rgba(255, 255, 255, 0.2)",
           },
         },
       },

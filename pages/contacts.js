@@ -20,19 +20,18 @@ export default function Contacts() {
           Социальные сети:
         </span>
         <div className="flex flex-col items-center text-2xl text-Ash font-Philosopher">
-          <a>Facebook</a>
-          <a>Facebook</a>
-          <a>Facebook</a>
+          <a href="https://" target="_blank">
+            Facebook
+          </a>
+          <a href="https://" target="_blank">
+            Facebook
+          </a>
+          <a href="https://" target="_blank">
+            Facebook
+          </a>
         </div>
       </div>
-      <div className="mt-32">
-        <span className="text-2xl text-Ash font-Philosopher italic">
-          Если Вы хотите оставить отзыв о книге, пожалуйста, пишите только на нашу{" "}
-          <a href="mailto:igorgol2003@inbox.ru" className="font-bold">
-            электронную почту
-          </a>.
-        </span>
-      </div>
+      
     </div>
   );
 }

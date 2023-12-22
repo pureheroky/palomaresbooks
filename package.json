@@ -17,9 +17,11 @@
     "mammoth": "^1.6.0",
     "next": "13.5.4",
     "next-nprogress-bar": "^2.1.2",
+    "nodemailer": "^6.9.7",
     "nprogress": "^0.2.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-google-recaptcha": "^3.1.0",
     "react-img-zoom": "^0.1.0"
   },
   "devDependencies": {

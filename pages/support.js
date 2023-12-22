@@ -19,13 +19,24 @@ export default function Support() {
     }
   };
 
+  const sendRequest = async () => {
+    console.log(inputText, inputGmail);
+    const response = await fetch("/api/sendfeedbackrequest/", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ text: inputText, usermail: inputGmail }),
+    });
+  };
+
   return (
     <div className=" min-h-screen flex flex-col ">
-      <span className="p-16 text-Ash text-4xl font-Philosopher w-full text-center">
+      <span className="sm:p-16 p-6 text-Ash text-4xl font-Philosopher w-full text-center">
         Пожалуйста, заполните форму для того чтобы связаться с нами.
       </span>
       <div className="flex min-h-screen justify-center items-center">
-        <div className="flex flex-col w-1/2 border-black">
+        <div className="flex flex-col sm:w-1/2 border-black">
           <div
             className={`m-4 text-Ash font-Philosopher text-2xl transform origin-bottom transition-transform duration-300`}
           >
@@ -39,10 +50,13 @@ export default function Support() {
                 setName(e.target.value);
                 checkValues();
               }}
-              onClick={() => {
+              onMouseEnter={() => {
                 setIsHovered1(true);
                 setIsHovered2(false);
                 setIsHovered3(false);
+              }}
+              onMouseLeave={() => {
+                setIsHovered1(false);
               }}
             />
             <div
@@ -62,10 +76,13 @@ export default function Support() {
                 setEmail(e.target.value);
                 checkValues();
               }}
-              onClick={() => {
+              onMouseEnter={() => {
                 setIsHovered1(false);
                 setIsHovered2(true);
                 setIsHovered3(false);
+              }}
+              onMouseLeave={() => {
+                setIsHovered2(false);
               }}
             />
             <div
@@ -85,10 +102,13 @@ export default function Support() {
                 setText(e.target.value);
                 checkValues();
               }}
-              onClick={() => {
+              onMouseEnter={() => {
                 setIsHovered1(false);
                 setIsHovered2(false);
                 setIsHovered3(true);
+              }}
+              onMouseLeave={() => {
+                setIsHovered3(false);
               }}
             />
             <div
@@ -98,14 +118,22 @@ export default function Support() {
             ></div>
           </div>
           <div className="flex justify-center m-4">
-            <Button variant="outlined" color="jet" className="bg-Ash">
+            <Button
+              id="sendBtn"
+              variant="outlined"
+              color="ash"
+              onClick={async () => {
+                await sendRequest();
+                
+              }}
+            >
               Отправить
             </Button>
           </div>
           <div className="flex justify-center m-4">
-            <span className="italic font-Philosopher text-xl text-Ash">
-              Перед отправкой убедитесь в том, что вы указали все необходимые
-              данные.
+            <span className="italic font-Philosopher text-xl text-Ash text-center">
+              Перед отправкой убедитесь в том, что вы указали все{" "}
+              <span className="font-bold text-center">необходимые данные.</span>
             </span>
           </div>
         </div>
