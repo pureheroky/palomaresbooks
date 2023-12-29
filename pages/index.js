@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Book from "@/components/book";
-import { imageList } from "@/components/bookimages";
+import { imageList } from "@/components/bookinfo";
 
 export default function Index() {
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -9,8 +9,8 @@ export default function Index() {
   const handleMouseEnter = (e) => {
     const rect = e.target.getBoundingClientRect();
     setTooltipPosition({
-      top: rect.bottom + window.scrollY - 50,
-      left: rect.left + window.scrollX + 230,
+      top: rect.bottom + window.scrollY - 80,
+      left: rect.left + window.scrollX,
     });
     showPopup(true);
   };
@@ -21,7 +21,7 @@ export default function Index() {
 
   return (
     <div className="flex min-h-screen flex-col w-full items-center ">
-      <span className="text-Ash h-full w-full text-3xl md:text-2xl sm:text-xl xl:text-3xl italic font-Philosopher text-center p-5">
+      <span className="text-Ash h-full xl:w-full text-3xl md:text-2xl sm:text-xl xl:text-3xl italic font-Philosopher text-center p-5">
         Книги продаются только в электронной версии
         <span
           className="cursor-help select-none"
@@ -31,7 +31,7 @@ export default function Index() {
           *
           {popup ? (
             <div
-              className="xl:absolute fixed bg-Ash text-xl text-Jet p-2 rounded xl:top-full left-1/2 xl:transform -translate-x-1/2 opacity-100 transition-opacity duration-300"
+              className="xl:absolute fixed bg-Ash xl:text-xl text-base text-Jet p-2 rounded xl:top-full left-2 xl:left-1/2 xl:transform-translate-x-1/2 opacity-100 transition-opacity duration-300"
               style={{
                 top: tooltipPosition.top,
                 left: tooltipPosition.left,
@@ -49,25 +49,25 @@ export default function Index() {
         <Book
           title={"Ваша Раша."}
           url={"/books/book1"}
-          price={200}
+          price={100}
           imgurl={imageList[0]}
         />
         <Book
           title={"По банановым республикам без охраны."}
           url={"/books/book2"}
-          price={350}
+          price={250}
           imgurl={imageList[1]}
         />
         <Book
           title={"Банные хроники."}
           url={"/books/book3"}
-          price={500}
+          price={100}
           imgurl={imageList[2]}
         />
         <Book
-          title={"Времена гада. Лето Кетцалькоатля."}
+          title={"Времена гада. Лето Кетцалькоатля. Часть 1"}
           url={"/books/book4"}
-          price={500}
+          price={150}
           imgurl={imageList[3]}
         />
       </div>

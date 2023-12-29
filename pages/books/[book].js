@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { bookData } from "@/components/bookimages";
+import { bookData } from "@/components/bookinfo";
 import { useRouter } from "next/router";
 
 import PaymentWindow from "@/components/PaymentWindow";
@@ -31,8 +31,8 @@ export default function Book() {
   const handleMouseEnter = (e) => {
     const rect = e.target.getBoundingClientRect();
     setTooltipPosition({
-      top: rect.bottom + window.scrollY - 50,
-      left: rect.left + window.scrollX + 250,
+      top: rect.bottom + window.scrollY - 80,
+      left: rect.left + window.scrollX + 170,
     });
     showPopup(true);
   };
@@ -55,7 +55,7 @@ export default function Book() {
 
   const sendGrade = async () => {
     console.log(inputText, inputGmail);
-    const response = await fetch("/api/sendgrade/", {
+    await fetch("/api/sendgrade/", {
       method: "post",
       headers: {
         "Content-type": "application/json",
@@ -107,25 +107,25 @@ export default function Book() {
   return (
     <div className="flex flex-col">
       {bookData[bookid] ? (
-        <div className=" flex flex-col md:flex-row border-b-2 sm:p-28 p-6 h-full justify-center items-center md:items-stretch">
-          <div className="flex md:w-[600px] w-[400px] h-full">
+        <div className=" flex flex-col md:flex-row border-b-2 sm:p-28 p-1 md:p-6 h-full justify-center items-center md:items-stretch">
+          <div className="flex justify-center md:w-[700px] w-[400px] h-full">
             <img
-              className="border-2 border-Jet rounded-lg w-[400px] xl:w-auto"
+              className="border-2 border-Jet rounded-lg w-[300px] xl:w-auto"
               src={bookData[bookid][4].src}
             ></img>
           </div>
-          <div className="md:ml-24 md:w-[450px] flex flex-col text-center md:text-start mt-6 sm:mt-0">
+          <div className="md:ml-24 w-full md:w-[450px] flex flex-col text-center md:text-start mt-6 sm:mt-0">
             <span className="text-3xl md:text-4xl xl:text-6xl text-Ash font-Philosopher font-bold">
               {bookData[bookid][0]}
             </span>
             <span className="text-xl md:text-3xl xl:text-4xl mt-6 text-Ash font-Philosopher font-light">
               {bookData[bookid][1]} руб.
             </span>
-            <span className="text-base xl:text-xl mt-4 md:mt-20 text-Ash font-Philosopher italic font-light">
+            <span className="text-base xl:text-xl mt-4 mb-4 md:mt-10 md:mb-10 text-Ash font-Philosopher italic font-light">
               {bookData[bookid][2]}
             </span>
 
-            <div className="w-full sm:w-auto cursor-default md:mt-auto mt-10 flex-col flex">
+            <div className="w-full sm:w-auto cursor-default md:mt-auto flex-col flex">
               <Button color="ash" onClick={(e) => togglePaymentWindow(e, true)}>
                 Купить и скачать
               </Button>
@@ -283,14 +283,18 @@ export default function Book() {
                   let el = document.getElementById("gradeSent");
                   el.style.opacity = "1";
                   el.style.cursor = "text";
-                  if (selectedGrade && inputText == "" && inputGmail == "") {
+                  if (
+                    selectedGrade == 0 ||
+                    inputText == "" ||
+                    inputGmail == ""
+                  ) {
                     el.textContent =
                       "Заполните все данные чтобы отправить отзыв.";
+                    console.log(selectedGrade == 0 ? true : false, inputGmail == "" ? true : false, inputText == "" ? true : false);
                   } else {
                     el.textContent = "Спасибо за Ваш отзыв!";
+                    await sendGrade();
                   }
-
-                  await sendGrade();
                 }}
               >
                 Отправить
@@ -299,9 +303,7 @@ export default function Book() {
             <span
               id="gradeSent"
               className="opacity-0 cursor-default text-Ash font-Philosopher text-2xl italic text-center"
-            >
-              text
-            </span>
+            ></span>
           </div>
         </div>
       ) : (

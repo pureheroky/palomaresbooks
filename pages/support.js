@@ -20,13 +20,13 @@ export default function Support() {
   };
 
   const sendRequest = async () => {
-    console.log(inputText, inputGmail);
-    const response = await fetch("/api/sendfeedbackrequest/", {
+    console.log(inputText, inputEmail);
+    await fetch("/api/sendfeedbackrequest/", {
       method: "post",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ text: inputText, usermail: inputGmail }),
+      body: JSON.stringify({ text: inputText, usermail: inputEmail }),
     });
   };
 
@@ -123,8 +123,9 @@ export default function Support() {
               variant="outlined"
               color="ash"
               onClick={async () => {
-                await sendRequest();
-                
+                if (isReady) {
+                  await sendRequest();
+                }
               }}
             >
               Отправить

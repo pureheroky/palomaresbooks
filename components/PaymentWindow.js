@@ -3,73 +3,40 @@ import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 
 export default function PaymentWindow({ title, price, close, bookid }) {
-  const buildSupportedPaymentMethodData = () => {
-    return [
-      {
-        supportedMethods: ["http://localhost:3000"],
-        data: {
-          supportedNetworks: ["visa", "mastercard"],
-          supportedTypes: ["credit", "debit"],
-        },
-      },
-    ];
-  };
-
-  const buildShoppingCartDetails = () => {
-    return {
-      id: "order",
-      displayItems: [
-        {
-          label: title,
-          amount: { currency: "RUB", value: `${price}` },
-        },
-      ],
-      total: {
-        label: "Total",
-        amount: { currency: "RUB", value: 1 },
-      },
-    };
-  };
-
-  let payHandler = () => {
-    const request = new PaymentRequest(
-      buildSupportedPaymentMethodData(),
-      buildShoppingCartDetails()
-    );
-
-    request.show().then((PaymentResponse) => {
-      console.log(PaymentResponse);
-    });
-  };
-
   let downloadHandler = () => {
     console.log(title);
     const filename = `${bookid}.docx`;
     fetch("/api/getbook", {
       method: "post",
-      responseType: "blob",
+      responseType: "json",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({
         bookname: filename,
+        price: price,
+        id: bookid,
       }),
     }).then(async (res) => {
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
+      // const blob = await res.blob();
+      // const url = window.URL.createObjectURL(blob);
+      let response = await res.json();
+      console.log(response[0]);
+
       const a = document.createElement("a");
-      a.href = url;
-      a.download = `${title}.docx`;
+      a.href = response[0];
+      // a.download = `${title}.docx`;
       document.body.appendChild(a);
       a.click();
-      window.URL.revokeObjectURL(url);
+      window.URL.revokeObjectURL(response[0]);
     });
   };
   return (
     <div className="relative">
       <div className="fixed inset-0 backdrop-filter backdrop-blur-md z-10">
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 bg-Azure border-2 border-Ash -translate-y-1/2 rounded shadow-lg 2xl:w-2/4 2xl:h-3/4 md:w-3/4 h-full w-11/12">
-          <div className="text-Ash font-Poppins rounded-lg xl:p-4 md:p-2 p-5 h-full">
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 bg-Azure border-2 border-Ash -translate-y-1/2 rounded shadow-lg 2xl:w-2/4 2xl:h-3/4 md:w-3/4 md:h-full w-11/12">
+          <div className="text-Ash font-Poppins rounded-lg xl:p-4 md:p-2 p-5 md:h-full">
             <div className="flex w-full justify-end xl:p-4 p-1 cursor-pointer md:text-5xl text-2xl">
               <CloseIcon
                 className="xl:text-xl md:text-base text-2xl"
@@ -112,8 +79,7 @@ export default function PaymentWindow({ title, price, close, bookid }) {
                 color="ash"
                 style={{ fontSize: "18px" }}
                 onClick={() => {
-                  // downloadHandler();
-                  payHandler();
+                  downloadHandler();
                 }}
               >
                 Купить
